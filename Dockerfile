@@ -25,7 +25,10 @@ RUN yarn install && yarn build
 # Building a backend.
 #
 
-FROM --platform=linux/amd64 golang:1.21.13-alpine AS backend
+FROM --platform=$BUILDPLATFORM golang:1.21.13-alpine AS backend
+
+ARG TARGETOS
+ARG TARGETARCH
 
 # Move to a working directory (/build).
 WORKDIR /build
@@ -41,7 +44,7 @@ COPY . .
 COPY --from=frontend ["/static/build", "ui/build"]
 
 # Set necessary environmet variables needed for the image and build the server.
-ENV CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+ENV CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH}
 
 # Run go build (with ldflags to reduce binary size).
 RUN go build \
