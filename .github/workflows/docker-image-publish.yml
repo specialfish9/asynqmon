@@ -21,7 +21,7 @@ jobs:
         id: meta
         uses: crazy-max/ghaction-docker-meta@v2
         with:
-          images: hibiken/asynqmon
+          images: specialfish9/asynqmon
           tags: |
             type=ref,event=branch
             type=ref,event=pr
